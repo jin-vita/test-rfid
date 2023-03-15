@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
+    <!-- 블루투스 기능을 사용하기 위한 기본 권한 (검색, 페어링) (디바이스 상태 읽기, 쓰기) -->
+    <uses-permission android:name="android.permission.BLUETOOTH"/> <!-- 블루투스 관리 권한 (블루투스 켜기, 끄기) (연결 설정) (스캔 모드 설정) -->
+    <uses-permission
+            android:name="android.permission.BLUETOOTH_ADMIN"/> <!-- 블루투스로 디바이스간 데이터 교환 (BluetoothSocket) (BluetoothGatt 로 BLE 통신) -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
+
+    <application
+            android:name=".MyApp"
+            android:allowBackup="true"
+            android:dataExtractionRules="@xml/data_extraction_rules"
+            android:fullBackupContent="@xml/backup_rules"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@style/Theme.RfidTest"
+            tools:targetApi="31">
+        <activity
+                android:name=".RfidActivity"
+                android:exported="false">
+            <meta-data
+                    android:name="android.app.lib_name"
+                    android:value=""/>
+        </activity>
+        <activity
+                android:name=".MainActivity"
+                android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+            <meta-data
+                    android:name="android.app.lib_name"
+                    android:value=""/>
+        </activity>
+
+        <provider android:name="com.apulsetech.lib.provider.LocalStateProvider"
+                  android:authorities="com.apulsetech.app.customer.LocalStateProvider"
+                  android:exported="true"
+                  android:grantUriPermissions="true"
+                  tools:ignore="ExportedContentProvider"/>
+
+    </application>
+
+</manifest>
