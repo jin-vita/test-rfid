@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="25sp"
-            android:text="메인화면"/>
+            android:text="기기가 연결되지 않았습니다"/>
 
     <View android:layout_width="match_parent" android:layout_height="20dp"/>
 
@@ -30,6 +30,24 @@
     <Button
             android:id="@+id/button2"
             android:text="맥주소2로 연결하기"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <View android:layout_width="match_parent" android:layout_height="20dp"/>
+
+    <Button
+            android:id="@+id/button3"
+            android:text="연결 끊기"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <View android:layout_width="match_parent" android:layout_height="20dp"/>
+
+    <Button
+            android:id="@+id/button4"
+            android:text="연결 끊고 다시연결하기"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
