@@ -6,7 +6,7 @@
               android:orientation="vertical"
               tools:context=".MainActivity">
 
-    <View android:layout_width="match_parent" android:layout_height="20dp"/>
+    <View android:layout_width="match_parent" android:layout_height="10dp"/>
 
     <TextView
             android:id="@+id/id_output"
@@ -16,41 +16,75 @@
             android:textSize="25sp"
             android:text="기기가 연결되지 않았습니다"/>
 
-    <View android:layout_width="match_parent" android:layout_height="20dp"/>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
 
-    <Button
-            android:id="@+id/button"
-            android:text="맥주소로 연결하기"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        <Button
+                android:id="@+id/button"
+                android:text="연결"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
 
-    <View android:layout_width="match_parent" android:layout_height="20dp"/>
+        <View android:layout_width="10dp" android:layout_height="match_parent"/>
 
-    <Button
-            android:id="@+id/button2"
-            android:text="맥주소2로 연결하기"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        <Button
+                android:id="@+id/button3"
+                android:text="끊기"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
 
-    <View android:layout_width="match_parent" android:layout_height="20dp"/>
+        <View android:layout_width="10dp" android:layout_height="match_parent"/>
 
-    <Button
-            android:id="@+id/button3"
-            android:text="연결 끊기"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        <Button
+                android:id="@+id/button2"
+                android:text="재연결"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
 
-    <View android:layout_width="match_parent" android:layout_height="20dp"/>
+        <View android:layout_width="10dp" android:layout_height="match_parent"/>
 
-    <Button
-            android:id="@+id/button4"
-            android:text="연결 끊고 다시연결하기"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        <Button
+                android:id="@+id/button4"
+                android:text="인벤토리"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="10dp"
+            android:layout_gravity="center">
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:text="RF 파워"/>
+
+        <Spinner
+                android:id="@+id/spinner_power_gain"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                style="@style/Widget.AppCompat.Spinner.Underlined"/>
+
+    </LinearLayout>
 
     <TextView
             android:id="@+id/log_output"
