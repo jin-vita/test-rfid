@@ -43,9 +43,9 @@ class MainActivity : AppCompatActivity(), ReaderEventListener {
 
     private val mBluetoothAdapter by lazy { (getSystemService(BLUETOOTH_SERVICE) as BluetoothManager).adapter }
     private val mBleSupported by lazy { packageManager.hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE) }
-    private val prefs: PreferenceUtil by lazy { PreferenceUtil(this) }
     private val handler by lazy { Handler(Looper.getMainLooper()) }
     private val loading by lazy { LoadingDialog(this) }
+    private val text by lazy { StringBuilder() }
 
     private lateinit var mReader: Reader
     private lateinit var remoteDevice: RemoteDevice
@@ -101,14 +101,15 @@ class MainActivity : AppCompatActivity(), ReaderEventListener {
             }
         } else {
             result = mReader.startInventory()
-            if (result == RfidResult.SUCCESS) {
-                mInventoryStarted = true
-                binding.spinnerPowerGain.isEnabled = false
-                binding.button4.text = "정지"
-            } else if (result == RfidResult.LOW_BATTERY) {
-                printLog("배터리 잔량이 부족합니다!")
-            } else {
-                printLog("인벤토리 시작에 실패하였습니다!")
+            when (result) {
+                RfidResult.SUCCESS -> {
+                    mInventoryStarted = true
+                    binding.spinnerPowerGain.isEnabled = false
+                    binding.button4.text = "정지"
+                }
+
+                RfidResult.LOW_BATTERY -> printLog("배터리 잔량이 부족합니다!")
+                else -> printLog("인벤토리 시작에 실패하였습니다!")
             }
         }
         binding.button4.isEnabled = true
@@ -164,6 +165,7 @@ class MainActivity : AppCompatActivity(), ReaderEventListener {
         // 블루투스 권한이 허용되어 있는지 확인
         if (granted == PackageManager.PERMISSION_GRANTED) {
             // 블루투스가 꺼져 있으면 켤 것인지 물어보기
+            @Suppress("DEPRECATION")
             if (!mBluetoothAdapter.isEnabled)
                 startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BT)
             // 블루투스가 켜져있을 때 자동연결상황이라면 연결시도
@@ -173,7 +175,9 @@ class MainActivity : AppCompatActivity(), ReaderEventListener {
         else ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.BLUETOOTH), 0)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        @Suppress("DEPRECATION")
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_ENABLE_BT) {
             if (resultCode == Activity.RESULT_OK) printLog("Bluetooth is on!")
@@ -185,7 +189,8 @@ class MainActivity : AppCompatActivity(), ReaderEventListener {
 
     private fun connectByMac(address: String) {
         printLog("connectByMac called")
-        val btDevice: BluetoothDevice = mBluetoothAdapter.getRemoteDevice(address)
+        @SuppressLint("MissingPermission")
+        val btDevice: BluetoothDevice = mBluetoothAdapter.getRemoteDevice(address).apply { createBond() }
         val device: RemoteDevice = RemoteDevice.makeBtSppDevice(btDevice)
 
         if (device.name.isNullOrBlank()) {
@@ -200,6 +205,7 @@ class MainActivity : AppCompatActivity(), ReaderEventListener {
     }
 
     private fun initialize() {
+        App.debug(TAG, "initialize called. remoteDevice : $remoteDevice, timeout : $timeout")
         printLog("initialize called. remoteDevice : $remoteDevice, timeout : $timeout")
         val reader = Reader.getReader(applicationContext, remoteDevice, false, timeout)
         if (reader == null) {
@@ -214,9 +220,7 @@ class MainActivity : AppCompatActivity(), ReaderEventListener {
             }
             return
         }
-
         mReader = reader
-
         if (!mReader.start()) {
             mReader.destroy()
             binding.idOutput.text = "모듈 연결에 실패"
@@ -229,7 +233,9 @@ class MainActivity : AppCompatActivity(), ReaderEventListener {
         mReader.setEventListener(this)
         loading.cancel()
         App.showToast("리더기에 성공적으로 연결하였습니다!")
-        binding.idOutput.text = "RFID MODEL : ${remoteDevice.name}\nMAC : ${remoteDevice.address}"
+        text.append("RFID MODEL : ").appendLine(remoteDevice.name)
+            .append("MAC : ").append(remoteDevice.address)
+        binding.idOutput.text = text
 
         val controller = RemoteController.getRemoteControllerIfAvailable()
         controller.apply {
