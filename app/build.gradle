@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'org.techtown.rfidtest'
+    namespace 'org.techtown.testrfid'
     compileSdk 33
 
     defaultConfig {
-        applicationId "org.techtown.rfidtest"
+        applicationId "org.techtown.testrfid"
         minSdk 22
         targetSdk 33
         versionCode 1

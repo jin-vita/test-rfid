@@ -1,4 +1,4 @@
-package org.techtown.rfidtest
+package org.techtown.testrfid
 
 import android.util.Log
 import android.widget.Toast

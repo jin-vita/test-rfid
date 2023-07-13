@@ -1,4 +1,4 @@
-package org.techtown.rfidtest
+package org.techtown.testrfid
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -29,7 +29,7 @@ import com.apulsetech.lib.remote.type.RemoteSetting
 import com.apulsetech.lib.rfid.Reader
 import com.apulsetech.lib.rfid.type.RFID
 import com.apulsetech.lib.rfid.type.RfidResult
-import org.techtown.rfidtest.databinding.ActivityMainBinding
+import org.techtown.testrfid.databinding.ActivityMainBinding
 import java.text.SimpleDateFormat
 import java.util.*
 

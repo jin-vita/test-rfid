@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RfidTest</string>
+    <string name="app_name">TestRfid</string>
     <string name="loading">LOADING . . .</string>
     <string name="connecting">CONNECTING . . .</string>
 </resources>
